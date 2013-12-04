@@ -18,6 +18,8 @@
 		<servlet-api.version>2.5</servlet-api.version>
 		<jsp-api.version>2.1</jsp-api.version>
 		<jstl-api.version>1.2</jstl-api.version>
+		<javax-validation.version>1.0.0.GA</javax-validation.version>
+		<hibernate-validator.version>4.1.0.Final</hibernate-validator.version>
 		<log4j.version>1.2.15</log4j.version>
 		<assertj.version>1.3.0</assertj.version>
 		<org.springframework.version>3.2.4.RELEASE</org.springframework.version>
@@ -66,6 +68,18 @@
 			<version>1</version>
 		</dependency>
 				
+		<!-- Validator -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>${javax-validation.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validator.version}</version>
+		</dependency>
+		
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
