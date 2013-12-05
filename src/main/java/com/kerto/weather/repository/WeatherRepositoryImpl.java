@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kerto.weather.HomeController;
+import com.kerto.weather.exceptions.ZipCodeNotFoundException;
 import com.kerto.weather.model.Weather;
 
 @Repository
@@ -25,13 +26,25 @@ public class WeatherRepositoryImpl implements WeatherRepository {
 	private Environment env;
 
 	@Override
-	public Weather getWeatherFromZipCode(String zipCode) {
+	public URL getURLFromZipCode(String zipCode) throws IOException {
+		return new URL(env.getProperty("url.weather") + zipCode + ".json");
+	}
+
+	@Override
+	public Weather getWeatherFromZipCode(String zipCode)
+			throws ZipCodeNotFoundException, IOException,
+			JsonProcessingException {
 		Weather weather = new Weather();
 		ObjectMapper mapper = new ObjectMapper();
-		JsonNode rootNode;
+
 		try {
-			rootNode = mapper.readTree(new URL(env.getProperty("url.weather")
-					+ zipCode + ".json"));
+			URL urlZipCode = getURLFromZipCode(zipCode);
+			JsonNode rootNode = mapper.readTree(urlZipCode);
+			JsonNode errorNode = rootNode.path("response").path("error");
+			if (!errorNode.isMissingNode()) {
+				throw new ZipCodeNotFoundException();
+			}
+
 			JsonNode currentObservationNode = rootNode
 					.path("current_observation");
 			JsonNode displayLocation = currentObservationNode
@@ -41,8 +54,10 @@ public class WeatherRepositoryImpl implements WeatherRepository {
 			weather.setTempF(currentObservationNode.path("temp_f").asDouble());
 		} catch (JsonProcessingException e) {
 			log.error("Error while processing json file", e);
+			throw e;
 		} catch (IOException e) {
 			log.error("Error while getting json file", e);
+			throw e;
 		}
 
 		return weather;
