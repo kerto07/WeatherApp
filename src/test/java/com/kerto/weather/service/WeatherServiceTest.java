@@ -1,16 +1,12 @@
 package com.kerto.weather.service;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.kerto.weather.config.TestBase;
 import com.kerto.weather.exceptions.ZipCodeFormatException;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml")
-public class WeatherServiceTest {
+public class WeatherServiceTest extends TestBase {
 
 	@Autowired
 	private WeatherService weatherService;

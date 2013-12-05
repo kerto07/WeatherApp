@@ -5,6 +5,8 @@ import java.net.URL;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,15 +21,17 @@ public class WeatherRepositoryImpl implements WeatherRepository {
 	private static final Logger log = LoggerFactory
 			.getLogger(HomeController.class);
 
+	@Autowired
+	private Environment env;
+
 	@Override
 	public Weather getWeatherFromZipCode(String zipCode) {
 		Weather weather = new Weather();
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode rootNode;
 		try {
-			rootNode = mapper
-					.readTree(new URL(
-							"http://api.wunderground.com/api/ed044d75b91fb500/conditions/q/94117.json"));
+			rootNode = mapper.readTree(new URL(env.getProperty("url.weather")
+					+ zipCode + ".json"));
 			JsonNode currentObservationNode = rootNode
 					.path("current_observation");
 			JsonNode displayLocation = currentObservationNode
