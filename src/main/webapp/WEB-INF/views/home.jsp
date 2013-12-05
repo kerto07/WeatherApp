@@ -24,6 +24,9 @@
 	
 			<p><button type="submit">Submit</button></p>
 		</form>
+		<c:if test="${not empty errMsg}">
+			<h4>${errMsg}</h4>
+		</c:if>
 	</div>
 </body>
 </html>
