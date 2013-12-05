@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kerto.weather.exceptions.ZipCodeFormatException;
+import com.kerto.weather.model.Weather;
 import com.kerto.weather.service.WeatherService;
 
 /**
@@ -36,8 +37,8 @@ public class HomeController {
 	public String findWeatherInfosByZipCode(@RequestParam String zipCode,
 			Model model) throws ZipCodeFormatException {
 
-		weatherService.getWeatherFromZipCode(zipCode);
-
+		Weather weather = weatherService.getWeatherFromZipCode(zipCode);
+		model.addAttribute("weather", weather);
 		return "weatherInfos";
 	}
 

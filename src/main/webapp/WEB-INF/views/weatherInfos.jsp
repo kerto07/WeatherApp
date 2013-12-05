@@ -10,6 +10,13 @@
 	<div id="formsContent">
 		<h2>Weather informations</h2>
 		Informations to display
+		
+		<br>
+		City: ${weather.city}
+		<br>
+		State: ${weather.state}
+		<br>
+		Temperature F: ${weather.tempF} F
 	</div>
 </body>
 </html>

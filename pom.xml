@@ -26,6 +26,7 @@
 		<org.aspectj.version>1.6.10</org.aspectj.version>
 		<org.slf4j.version>1.6.6</org.slf4j.version>
 		<commons-lang.version>3.1</commons-lang.version>
+		<jackson-databind.version>2.2.3</jackson-databind.version>
 		
 		<!-- Plugins version -->
 		<maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
@@ -67,7 +68,14 @@
   			<artifactId>commons-lang3</artifactId>
   			<version>${commons-lang.version}</version>
 		</dependency>
-				
+		
+		<!-- Jackson JSON Processor -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson-databind.version}</version>
+		</dependency>
+		
 		<!-- @Inject -->
 		<dependency>
 			<groupId>javax.inject</groupId>
