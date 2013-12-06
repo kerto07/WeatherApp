@@ -1,7 +1,7 @@
 WeatherApp
 ============
 
-Java project in Spring 3 that displays the weather 
+Sample Spring 3 MVC application displaying the weather of a city based on the zip code.
 
 Get started
 ===========
@@ -10,7 +10,7 @@ Get started
 ```
 $ git clone https://github.com/kerto07/WeatherApp.git
 ```
-2) Build the application  
+2) Build the application
 ```
 $ mvn clean install
 ```

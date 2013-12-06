@@ -38,6 +38,7 @@
 		<maven-cobertura-plugin.version>2.6</maven-cobertura-plugin.version>
 		<maven-checkstyle-plugin.version>2.10</maven-checkstyle-plugin.version>
 		<maven-pmd-plugin.version>3.0.1</maven-pmd-plugin.version>
+		<maven-tomcat7-plugin.version>2.0</maven-tomcat7-plugin.version>
 	</properties>
 	<dependencies>
 		
@@ -224,26 +225,18 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <configuration>
-                    <mainClass>org.test.int1.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.0</version>
+				<version>${maven-tomcat7-plugin.version}</version>
 			</plugin>
 			
-		      <!-- Plugin used because we do not need no more web.xml (cf. ApplicationInitializer) -->
+		      <!-- Plugin used because we do not need no more web.xml -->
 		      <plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-war-plugin</artifactId>
