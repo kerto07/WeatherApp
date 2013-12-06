@@ -17,7 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kerto.weather.exceptions.ZipCodeFormatException;
 import com.kerto.weather.exceptions.ZipCodeNotFoundException;
 import com.kerto.weather.model.Weather;
-import com.kerto.weather.service.WeatherService;
+import com.kerto.weather.service.WeatherServiceImpl;
 
 /**
  * Handles requests for the application home page.
@@ -27,7 +27,7 @@ import com.kerto.weather.service.WeatherService;
 public class HomeController {
 
 	@Autowired
-	private WeatherService weatherService;
+	private WeatherServiceImpl weatherService;
 
 	private static final String TECHNICAL_ERROR = "technical error";
 

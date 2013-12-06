@@ -32,4 +32,10 @@ public class Weather {
 		this.tempF = tempF;
 	}
 
+	@Override
+	public String toString() {
+		return "Weather [city=" + city + ", state=" + state + ", tempF="
+				+ tempF + "]";
+	}
+
 }

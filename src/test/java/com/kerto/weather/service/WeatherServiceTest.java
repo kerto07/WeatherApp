@@ -33,7 +33,7 @@ public class WeatherServiceTest {
 	private WeatherRepository weatherRepository;
 
 	@InjectMocks
-	private WeatherService weatherService;
+	private WeatherServiceImpl weatherService;
 
 	@Before
 	public void setUp() throws JsonProcessingException,
