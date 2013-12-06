@@ -1,21 +1,21 @@
-<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="false" %>
+<!DOCTYPE html>
 <html>
 <head>
-	<title>Weather</title>
+	<title>Weather informations</title>
+	<meta name="description" content="Weather Informations">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all">
 </head>
 <body>
 	<div id="formsContent">
 		<h2>Weather informations</h2>
-		Informations to display
-		
 		<br>
-		City: ${weather.city}
+		City: <b>${weather.city}</b>
 		<br>
-		State: ${weather.state}
+		State: <b>${weather.state}</b>
 		<br>
-		Temperature F: ${weather.tempF} F
+		Temperature: <b>${weather.tempF} F</b>
 	</div>
 </body>
 </html>

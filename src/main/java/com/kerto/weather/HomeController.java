@@ -31,7 +31,7 @@ public class HomeController {
 
 	private static final String TECHNICAL_ERROR = "technical error";
 
-	private static final Logger logger = LoggerFactory
+	private static final Logger log = LoggerFactory
 			.getLogger(HomeController.class);
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -68,6 +68,7 @@ public class HomeController {
 
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleAllException(Exception ex) {
+		log.error("An exception occurs when getting weather informations", ex);
 		ModelAndView model = new ModelAndView("home");
 		model.addObject("errMsg", TECHNICAL_ERROR);
 
