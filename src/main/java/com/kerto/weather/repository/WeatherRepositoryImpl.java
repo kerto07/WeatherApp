@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kerto.weather.HomeController;
+import com.kerto.weather.exceptions.JsonFormatException;
 import com.kerto.weather.exceptions.ZipCodeNotFoundException;
 import com.kerto.weather.model.Weather;
 
@@ -33,7 +34,7 @@ public class WeatherRepositoryImpl implements WeatherRepository {
 	@Override
 	public Weather getWeatherFromZipCode(String zipCode)
 			throws ZipCodeNotFoundException, IOException,
-			JsonProcessingException {
+			JsonProcessingException, JsonFormatException {
 		Weather weather = new Weather();
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -49,9 +50,17 @@ public class WeatherRepositoryImpl implements WeatherRepository {
 					.path("current_observation");
 			JsonNode displayLocation = currentObservationNode
 					.path("display_location");
-			weather.setCity(displayLocation.path("city").asText());
-			weather.setState(displayLocation.path("state_name").asText());
-			weather.setTempF(currentObservationNode.path("temp_f").asDouble());
+			JsonNode cityNode = displayLocation.path("city");
+			JsonNode stateNode = displayLocation.path("state_name");
+			JsonNode tempNode = currentObservationNode.path("temp_f");
+
+			if (cityNode.isMissingNode() || stateNode.isMissingNode()
+					|| tempNode.isMissingNode()) {
+				throw new JsonFormatException();
+			}
+			weather.setCity(cityNode.asText());
+			weather.setState(stateNode.asText());
+			weather.setTempF(tempNode.asDouble());
 		} catch (JsonProcessingException e) {
 			log.error("Error while processing json file", e);
 			throw e;

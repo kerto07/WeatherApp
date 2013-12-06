@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kerto.weather.exceptions.JsonFormatException;
 import com.kerto.weather.exceptions.ZipCodeFormatException;
 import com.kerto.weather.exceptions.ZipCodeNotFoundException;
 import com.kerto.weather.model.Weather;
@@ -42,7 +43,8 @@ public class HomeController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String findWeatherInfosByZipCode(@RequestParam String zipCode,
 			Model model) throws ZipCodeFormatException,
-			JsonProcessingException, ZipCodeNotFoundException, IOException {
+			JsonProcessingException, ZipCodeNotFoundException, IOException,
+			JsonFormatException {
 
 		Weather weather = weatherService.getWeatherFromZipCode(zipCode);
 		model.addAttribute("weather", weather);
@@ -62,6 +64,14 @@ public class HomeController {
 			ZipCodeNotFoundException ex) {
 		ModelAndView model = new ModelAndView("home");
 		model.addObject("errMsg", ZipCodeNotFoundException.ERROR_MESSAGE);
+
+		return model;
+	}
+
+	@ExceptionHandler(JsonFormatException.class)
+	public ModelAndView handleJsonFormatException(JsonFormatException ex) {
+		ModelAndView model = new ModelAndView("home");
+		model.addObject("errMsg", JsonFormatException.ERROR_MESSAGE);
 
 		return model;
 	}

@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kerto.weather.exceptions.JsonFormatException;
 import com.kerto.weather.exceptions.ZipCodeFormatException;
 import com.kerto.weather.exceptions.ZipCodeNotFoundException;
 import com.kerto.weather.model.Weather;
@@ -37,7 +38,7 @@ public class WeatherServiceTest {
 
 	@Before
 	public void setUp() throws JsonProcessingException,
-			ZipCodeNotFoundException, IOException {
+			ZipCodeNotFoundException, IOException, JsonFormatException {
 		Weather mockedWeather = mock(Weather.class);
 		when(mockedWeather.getCity()).thenReturn(CITY_SAN_FRANCISCO);
 		when(mockedWeather.getState()).thenReturn(STATE_CALIFORNIA);
@@ -52,42 +53,42 @@ public class WeatherServiceTest {
 	@Test(expected = ZipCodeFormatException.class)
 	public void testGetWeatherFromZipCodeWithZipCodeNull()
 			throws ZipCodeFormatException, JsonProcessingException,
-			ZipCodeNotFoundException, IOException {
+			ZipCodeNotFoundException, IOException, JsonFormatException {
 		weatherService.getWeatherFromZipCode(null);
 	}
 
 	@Test(expected = ZipCodeFormatException.class)
 	public void testGetWeatherFromZipCodeWithZipCodeEmpty()
 			throws ZipCodeFormatException, JsonProcessingException,
-			ZipCodeNotFoundException, IOException {
+			ZipCodeNotFoundException, IOException, JsonFormatException {
 		weatherService.getWeatherFromZipCode("");
 	}
 
 	@Test(expected = ZipCodeFormatException.class)
 	public void testGetWeatherFromZipCodeWithZipCodeContainsLetter()
 			throws ZipCodeFormatException, JsonProcessingException,
-			ZipCodeNotFoundException, IOException {
+			ZipCodeNotFoundException, IOException, JsonFormatException {
 		weatherService.getWeatherFromZipCode("7895A");
 	}
 
 	@Test(expected = ZipCodeFormatException.class)
 	public void testGetWeatherFromZipCodeWithZipCodeContainsLessThan5Number()
 			throws ZipCodeFormatException, JsonProcessingException,
-			ZipCodeNotFoundException, IOException {
+			ZipCodeNotFoundException, IOException, JsonFormatException {
 		weatherService.getWeatherFromZipCode("7895");
 	}
 
 	@Test(expected = ZipCodeFormatException.class)
 	public void testGetWeatherFromZipCodeWithZipCodeContainsMoreThan5Number()
 			throws ZipCodeFormatException, JsonProcessingException,
-			ZipCodeNotFoundException, IOException {
+			ZipCodeNotFoundException, IOException, JsonFormatException {
 		weatherService.getWeatherFromZipCode("789566");
 	}
 
 	@Test
 	public void testGetWeatherFromZipCodeWithValidZipCode()
 			throws ZipCodeFormatException, JsonProcessingException,
-			ZipCodeNotFoundException, IOException {
+			ZipCodeNotFoundException, IOException, JsonFormatException {
 		Weather result = weatherService.getWeatherFromZipCode(ZIP_CODE_CORRECT);
 		assertThat(result.getCity()).isEqualTo(CITY_SAN_FRANCISCO);
 		assertThat(result.getState()).isEqualTo(STATE_CALIFORNIA);
@@ -97,7 +98,7 @@ public class WeatherServiceTest {
 	@Test(expected = ZipCodeNotFoundException.class)
 	public void testGetWeatherFromZipCodeWithZipCodeNotFound()
 			throws ZipCodeFormatException, JsonProcessingException,
-			ZipCodeNotFoundException, IOException {
+			ZipCodeNotFoundException, IOException, JsonFormatException {
 		weatherService.getWeatherFromZipCode(ZIP_CODE_NOT_FOUND);
 	}
 }

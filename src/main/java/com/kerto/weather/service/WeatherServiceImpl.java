@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kerto.weather.exceptions.JsonFormatException;
 import com.kerto.weather.exceptions.ZipCodeFormatException;
 import com.kerto.weather.exceptions.ZipCodeNotFoundException;
 import com.kerto.weather.model.Weather;
@@ -36,7 +37,7 @@ public class WeatherServiceImpl implements WeatherService {
 	@Override
 	public Weather getWeatherFromZipCode(String zipCode)
 			throws ZipCodeFormatException, JsonProcessingException,
-			ZipCodeNotFoundException, IOException {
+			ZipCodeNotFoundException, IOException, JsonFormatException {
 		if (zipCode == null || zipCode.isEmpty() || zipCode.length() != 5
 				|| !NumberUtils.isDigits(zipCode)) {
 			throw new ZipCodeFormatException();

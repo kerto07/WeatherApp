@@ -14,6 +14,7 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kerto.weather.exceptions.JsonFormatException;
 import com.kerto.weather.exceptions.ZipCodeNotFoundException;
 import com.kerto.weather.model.Weather;
 
@@ -22,6 +23,7 @@ public class WeatherRepositoryTest {
 
 	private static final String VALID_ZIP_CODE_FILE_NUMBER = "55555";
 	private static final String ZIP_CODE_NOT_FOUND_FILE_NUMBER = "77777";
+	private static final String INVALID_JSON_FILE_NUMBER = "99999";
 
 	private static final String CITY_SAN_FRANCISCO = "San Francisco";
 	private static final String STATE_CALIFORNIA = "California";
@@ -41,13 +43,17 @@ public class WeatherRepositoryTest {
 		URL zipCodeNotFoundUrl = getClass().getResource(
 				"/weatherJsonFiles/zipCodeNotFound.json");
 		doReturn(zipCodeNotFoundUrl).when(weatherRepository).getURLFromZipCode(
-				"77777");
+				ZIP_CODE_NOT_FOUND_FILE_NUMBER);
+		URL invalidJsonFileUrl = getClass().getResource(
+				"/weatherJsonFiles/invalidJsonFile.json");
+		doReturn(invalidJsonFileUrl).when(weatherRepository).getURLFromZipCode(
+				INVALID_JSON_FILE_NUMBER);
 	}
 
 	@Test
 	public void testGetWeatherFromZipCodeWithZipCodeExists()
 			throws JsonProcessingException, ZipCodeNotFoundException,
-			IOException {
+			IOException, JsonFormatException {
 		Weather result = weatherRepository
 				.getWeatherFromZipCode(VALID_ZIP_CODE_FILE_NUMBER);
 		assertThat(result.getCity()).isEqualTo(CITY_SAN_FRANCISCO);
@@ -58,8 +64,15 @@ public class WeatherRepositoryTest {
 	@Test(expected = ZipCodeNotFoundException.class)
 	public void testGetWeatherFromZipCodeWithZipCodeNotExists()
 			throws JsonProcessingException, ZipCodeNotFoundException,
-			IOException {
+			IOException, JsonFormatException {
 		weatherRepository.getWeatherFromZipCode(ZIP_CODE_NOT_FOUND_FILE_NUMBER);
+	}
+
+	@Test(expected = JsonFormatException.class)
+	public void testGetWeatherFromZipCodeWithJsonFileChangeFormat()
+			throws JsonProcessingException, ZipCodeNotFoundException,
+			IOException, JsonFormatException {
+		weatherRepository.getWeatherFromZipCode(INVALID_JSON_FILE_NUMBER);
 	}
 
 }
