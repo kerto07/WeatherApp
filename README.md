@@ -10,7 +10,7 @@ Get started
 ```
 $ git clone https://github.com/kerto07/WeatherApp.git
 ```
-2) Build the application
+2) Build the application and launch tests
 ```
 $ mvn clean install
 ```
