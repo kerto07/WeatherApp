@@ -33,6 +33,8 @@ public class WeatherServiceImpl implements WeatherService {
 	 *             if the zipCode don't exists
 	 * @throws IOException
 	 *             if there is technical error
+	 * @throws JsonFormatException
+	 *             if we don't find the datas in the file
 	 */
 	@Override
 	public Weather getWeatherFromZipCode(String zipCode)
